@@ -1,30 +1,25 @@
-from importlib.metadata import version, PackageNotFoundError
+"""CadQuery - A parametric 3D CAD scripting framework.
 
-try:
-    __version__ = version("cadquery")
-except PackageNotFoundError:
-    # package is not installed
-    __version__ = "2.8.0dev"
+CadQuery is an intuitive, easy-to-use Python module for building parametric 3D CAD models.
+It is analogous to OpenSCAD, but uses Python instead of a custom language.
 
-# these items point to the OCC implementation
-from .occ_impl.geom import Plane, BoundBox, Vector, Matrix, Location
-from .occ_impl.shapes import (
-    Shape,
-    Vertex,
-    Edge,
-    Face,
-    Wire,
-    Solid,
-    Shell,
-    Compound,
-    sortWiresByBuildOrder,
-)
-from .occ_impl import exporters
-from .occ_impl import importers
+CadQuery has several goals:
+    - Build models with scripts that are as close as possible to how you'd describe the object to a human.
+    - Create parametric models that can be easily customized by end users.
+    - Output high quality CAD formats such as STEP and AMF in addition to traditional STL.
+    - Provide a clean, easy-to-use API that is not tied to any CAD kernel.
 
-# these items are the common implementation
+Example usage::
 
-# the order of these matter
+    import cadquery as cq
+
+    result = cq.Workplane("XY").box(1, 2, 3)
+    cq.exporters.export(result, "box.step")
+"""
+
+from .cq import Workplane, CQContext
+from .assembly import Assembly, Constraint
+from .sketch import Sketch
 from .selectors import (
     NearestToPointSelector,
     ParallelDirSelector,
@@ -32,50 +27,61 @@ from .selectors import (
     PerpendicularDirSelector,
     TypeSelector,
     DirectionMinMaxSelector,
+    CenterNthSelector,
+    RadiusNthSelector,
+    LengthNthSelector,
+    AreaNthSelector,
     StringSyntaxSelector,
-    Selector,
 )
-from .sketch import Sketch
-from .cq import CQ, Workplane
-from .assembly import Assembly, Color, Constraint, Material
-from .types import UnitLiterals
+from .occ_impl.geom import Vector, Matrix, Plane, Location
+from .occ_impl.shapes import (
+    Shape,
+    Vertex,
+    Edge,
+    Wire,
+    Face,
+    Shell,
+    Solid,
+    Compound,
+)
+from . import exporters
+from . import importers
 from . import selectors
-from . import plugins
 
+__version__ = "2.5.0.dev0"
+__author__ = "CadQuery Contributors"
+__license__ = "Apache License 2.0"
 
 __all__ = [
-    "CQ",
     "Workplane",
+    "CQContext",
     "Assembly",
-    "Color",
     "Constraint",
-    "Material",
-    "plugins",
-    "selectors",
-    "Plane",
-    "BoundBox",
-    "Matrix",
+    "Sketch",
     "Vector",
+    "Matrix",
+    "Plane",
     "Location",
-    "sortWiresByBuildOrder",
     "Shape",
     "Vertex",
     "Edge",
     "Wire",
     "Face",
-    "Solid",
     "Shell",
+    "Solid",
     "Compound",
-    "exporters",
-    "importers",
     "NearestToPointSelector",
     "ParallelDirSelector",
     "DirectionSelector",
     "PerpendicularDirSelector",
     "TypeSelector",
     "DirectionMinMaxSelector",
+    "CenterNthSelector",
+    "RadiusNthSelector",
+    "LengthNthSelector",
+    "AreaNthSelector",
     "StringSyntaxSelector",
-    "Selector",
-    "Sketch",
-    "UnitLiterals",
+    "exporters",
+    "importers",
+    "selectors",
 ]
