@@ -19,6 +19,7 @@ Example usage::
 Personal fork notes:
     - Using this fork for learning CadQuery internals and experimenting with custom shapes.
     - See the examples/ directory for personal project scripts.
+    - Added `cq.show` as a convenience alias for quick REPL inspection (prints object info).
 """
 
 from .cq import Workplane, CQContext
@@ -56,6 +57,19 @@ __version__ = "2.5.0.dev0"
 __author__ = "CadQuery Contributors"
 __license__ = "Apache License 2.0"
 
+
+def show(obj):
+    """Personal convenience helper: print a summary of a CadQuery object.
+
+    Useful for quick inspection in the REPL without needing a full viewer.
+    """
+    if isinstance(obj, Workplane):
+        solids = obj.solids().vals()
+        print(f"<Workplane: {len(obj.vals())} object(s), {len(solids)} solid(s)>")
+    else:
+        print(repr(obj))
+
+
 __all__ = [
     "Workplane",
     "CQContext",
@@ -88,4 +102,5 @@ __all__ = [
     "exporters",
     "importers",
     "selectors",
+    "show",
 ]
