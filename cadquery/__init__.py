@@ -15,6 +15,10 @@ Example usage::
 
     result = cq.Workplane("XY").box(1, 2, 3)
     cq.exporters.export(result, "box.step")
+
+Personal fork notes:
+    - Using this fork for learning CadQuery internals and experimenting with custom shapes.
+    - See the examples/ directory for personal project scripts.
 """
 
 from .cq import Workplane, CQContext
